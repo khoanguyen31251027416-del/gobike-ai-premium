@@ -311,63 +311,48 @@ if st.button('🛵 ĐẶT XE PREMIUM', use_container_width=True, type="primary")
 
 
 
-                        # --- GIAO DIỆN APP (HTML Custom giữ nguyên) ---
-
+                       # --- GIAO DIỆN APP (HTML Custom) ---
                         html_card = f"""
-
-                        <div style="background: #ffffff; border-radius: 40px; box-shadow: 0 15px 50px rgba(0,0,0,0.1); padding: 35px; max-width: 500px; font-family: 'Courier New', Courier, monospace; margin: 20px auto; border: 1px solid #eee; text-align: center;">
-
+                        <div style="background: #ffffff; border-radius: 40px; box-shadow: 0 15px 50px rgba(0,0,0,0.1); padding: 35px; max-width: 500px; font-family: sans-serif; margin: 20px auto; border: 1px solid #eee; text-align: center;">
                             <div style="background: #e8f5e9; color: #2e7d32; display: inline-block; padding: 5px 20px; border-radius: 20px; font-size: 14px; font-weight: 900; letter-spacing: 2px; margin-bottom: 25px;">
-
                                 GOBIKE AI PREMIUM
-
                             </div>
-
                             <div style="display: flex; justify-content: space-between; gap: 20px; margin-bottom: 30px;">
-
                                 <div style="flex: 1; background: #fff; border: 2px solid #2ecc71; border-radius: 25px; padding: 15px; border-bottom: 8px solid #2ecc71;">
-
-<div style="font-size: 30px; margin-bottom: 5px;">🛣️</div>
-
+                                    <div style="font-size: 30px; margin-bottom: 5px;">🛣️</div>
                                     <div style="font-size: 12px; color: #7f8c8d; font-weight: 800; margin-bottom: 10px;">KHOẢNG CÁCH</div>
-
                                     <div style="font-size: 24px; font-weight: 900; color: #2c3e50;">{km:.2f} <span style="font-size: 16px; color: #27ae60;">km</span></div>
-
                                 </div>
-
                                 <div style="flex: 1; background: #fff; border: 2px solid #2ecc71; border-radius: 25px; padding: 15px; border-bottom: 8px solid #2ecc71;">
-
                                     <div style="font-size: 30px; margin-bottom: 5px;">⏱️</div>
-
                                     <div style="font-size: 12px; color: #7f8c8d; font-weight: 800; margin-bottom: 10px;">THỜI GIAN</div>
-
                                     <div style="font-size: 24px; font-weight: 900; color: #2c3e50;">{round(duration_mins)} <span style="font-size: 16px; color: #27ae60;">phút</span></div>
-
                                 </div>
-
                             </div>
-
                             <div style="background: #1a1a1a; border-radius: 30px; padding: 30px; color: white; position: relative; overflow: hidden;">
-
                                 <div style="font-size: 14px; color: #bdc3c7; margin-bottom: 15px; letter-spacing: 1px;">TỔNG CƯỚC THANH TOÁN</div>
-
                                 <div style="font-size: 48px; font-weight: 900; color: #f1c40f;">{round(fare, -2):,.0f} <span style="font-size: 24px; border-bottom: 4px solid #f1c40f;">đ</span></div>
-
                                 <div style="margin-top: 25px; border-top: 1px solid #333; padding-top: 15px;">
-
                                     <span style="color: #2ecc71; font-size: 13px;">● AI SURGE ACTIVE</span>
-
                                     <span style="color: #bdc3c7; font-size: 13px; margin-left: 10px;">| {surge_val:.1f}% Surge</span>
-
                                 </div>
-
                             </div>
-
                         </div>
-
                         """
+                        # Dòng này phải thẳng hàng tuyệt đối với chữ html_card ở trên
                         st.markdown(html_card, unsafe_allow_html=True)
 
+                        # --- VẼ BẢN ĐỒ ---
+                        m = folium.Map(location=coords[0], zoom_start=14)
+                        folium.PolyLine([[p[1], p[0]] for p in res['routes'][0]['geometry']['coordinates']], color="#2ecc71", weight=8, opacity=0.8).add_to(m)
+                        
+                        folium.Marker(coords[0], tooltip="Điểm Đón", popup=location_pickup.address, icon=folium.Icon(color='green', icon='home')).add_to(m)
+                        folium.Marker(coords[1], tooltip="Điểm Đến", popup=location_dropoff.address, icon=folium.Icon(color='red', icon='flag')).add_to(m)
+                        
+                        st_folium(m, width=700, height=500, returned_objects=[])
+
+            except Exception as e:
+                st.error(f"⚠️ Đã có lỗi xảy ra trong quá trình xử lý: {e}")
 
 
                        # --- VẼ BẢN ĐỒ ---

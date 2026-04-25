@@ -202,7 +202,7 @@ gobike_sim = setup_fuzzy_logic()
 
 st.markdown("<h1 style='text-align: center; color: #2ecc71;'>🛵 GOBIKE AI PREMIUM</h1>", unsafe_allow_html=True)
 
-st.markdown("<p style='text-align: center;'>Hệ thống đặt xe tích hợp Trí tuệ Nhân tạo & Mờ (Fuzzy Logic)</p>", unsafe_allow_html=True)
+st.markdown("<p style='text-align: center;'>Hệ thống đặt xe tích hợp Trí tuệ Nhân tạo & Logic Mờ (Fuzzy Logic)</p>", unsafe_allow_html=True)
 
 
 

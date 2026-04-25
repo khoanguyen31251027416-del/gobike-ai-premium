@@ -278,40 +278,23 @@ if st.button('🛵 ĐẶT XE PREMIUM', use_container_width=True, type="primary")
                     else:
 
                         km = res['routes'][0]['distance'] / 1000
-
                         duration_mins = res['routes'][0]['duration'] / 60
 
-
-
                         # 3. Tính toán Surge Pricing bằng Fuzzy Logic
-
                         weather_input = 5
-
                         traffic_input = 8
-
                         time_day_input = 1
 
-
-
                         gobike_sim.input['distance'] = min(km, 20)
-
                         gobike_sim.input['weather'] = weather_input
-
                         gobike_sim.input['traffic'] = traffic_input
-
                         gobike_sim.input['time_day'] = time_day_input
-
                         gobike_sim.compute()
 
-
-
                         surge_val = gobike_sim.output['surge_score']
-
                         fare = 12000 + (km * 4500) + (surge_val * 220)
 
-
-
-                       # --- GIAO DIỆN APP (HTML Custom) ---
+                        # --- GIAO DIỆN HIỂN THỊ GIÁ TIỀN ---
                         html_card = f"""
                         <div style="background: #ffffff; border-radius: 40px; box-shadow: 0 15px 50px rgba(0,0,0,0.1); padding: 35px; max-width: 500px; font-family: sans-serif; margin: 20px auto; border: 1px solid #eee; text-align: center;">
                             <div style="background: #e8f5e9; color: #2e7d32; display: inline-block; padding: 5px 20px; border-radius: 20px; font-size: 14px; font-weight: 900; letter-spacing: 2px; margin-bottom: 25px;">
@@ -339,31 +322,15 @@ if st.button('🛵 ĐẶT XE PREMIUM', use_container_width=True, type="primary")
                             </div>
                         </div>
                         """
-                        # Dòng này phải thẳng hàng tuyệt đối với chữ html_card ở trên
+                        # Dòng dưới đây PHẢI thẳng hàng với chữ html_card bên trên
                         st.markdown(html_card, unsafe_allow_html=True)
 
                         # --- VẼ BẢN ĐỒ ---
                         m = folium.Map(location=coords[0], zoom_start=14)
                         folium.PolyLine([[p[1], p[0]] for p in res['routes'][0]['geometry']['coordinates']], color="#2ecc71", weight=8, opacity=0.8).add_to(m)
-                        
                         folium.Marker(coords[0], tooltip="Điểm Đón", popup=location_pickup.address, icon=folium.Icon(color='green', icon='home')).add_to(m)
                         folium.Marker(coords[1], tooltip="Điểm Đến", popup=location_dropoff.address, icon=folium.Icon(color='red', icon='flag')).add_to(m)
-                        
                         st_folium(m, width=700, height=500, returned_objects=[])
 
             except Exception as e:
-                st.error(f"⚠️ Đã có lỗi xảy ra trong quá trình xử lý: {e}")
-
-
-                       # --- VẼ BẢN ĐỒ ---
-                        m = folium.Map(location=coords[0], zoom_start=14)
-                        folium.PolyLine([[p[1], p[0]] for p in res['routes'][0]['geometry']['coordinates']], color="#2ecc71", weight=8, opacity=0.8).add_to(m)
-                        
-                        # Thêm popup mô tả cho các điểm marker
-                        folium.Marker(coords[0], tooltip="Điểm Đón", popup=location_pickup.address, icon=folium.Icon(color='green', icon='home')).add_to(m)
-                        folium.Marker(coords[1], tooltip="Điểm Đến", popup=location_dropoff.address, icon=folium.Icon(color='red', icon='flag')).add_to(m)
-                        
-                        st_folium(m, width=700, height=500, returned_objects=[])
-
-            except Exception as e:
-                st.error(f"⚠️ Đã có lỗi xảy ra trong quá trình xử lý: {e}")
+                st.error(f"⚠️ Đã có lỗi xảy ra: {e}")

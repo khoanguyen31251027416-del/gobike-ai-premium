@@ -96,7 +96,7 @@ def setup_fuzzy_logic():
 
         ctrl.Rule(dist['moderate'] & weath['average'] & traf['smooth'] & time_day['normal'], surge['medium']),
 
-ctrl.Rule(dist['moderate'] & weath['average'] & traf['busy'] & time_day['normal'], surge['medium']),
+        ctrl.Rule(dist['moderate'] & weath['average'] & traf['busy'] & time_day['normal'], surge['medium']),
 
         ctrl.Rule(dist['moderate'] & weath['average'] & traf['jammed'] & time_day['normal'], surge['high']),
 
@@ -154,7 +154,7 @@ ctrl.Rule(dist['moderate'] & weath['average'] & traf['busy'] & time_day['normal'
 
         ctrl.Rule(dist['moderate'] & weath['average'] & traf['smooth'] & time_day['peak'], surge['medium']),
 
-ctrl.Rule(dist['moderate'] & weath['average'] & traf['busy'] & time_day['peak'], surge['high']),
+        ctrl.Rule(dist['moderate'] & weath['average'] & traf['busy'] & time_day['peak'], surge['high']),
 
         ctrl.Rule(dist['moderate'] & weath['average'] & traf['jammed'] & time_day['peak'], surge['high']),
 

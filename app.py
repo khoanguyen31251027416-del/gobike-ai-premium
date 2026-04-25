@@ -371,24 +371,15 @@ if st.button('🛵 ĐẶT XE PREMIUM', use_container_width=True, type="primary")
 
 
 
-                        # --- VẼ BẢN ĐỒ ---
-
+                       # --- VẼ BẢN ĐỒ ---
                         m = folium.Map(location=coords[0], zoom_start=14)
-
                         folium.PolyLine([[p[1], p[0]] for p in res['routes'][0]['geometry']['coordinates']], color="#2ecc71", weight=8, opacity=0.8).add_to(m)
-
                         
-
                         # Thêm popup mô tả cho các điểm marker
-
                         folium.Marker(coords[0], tooltip="Điểm Đón", popup=location_pickup.address, icon=folium.Icon(color='green', icon='home')).add_to(m)
-
                         folium.Marker(coords[1], tooltip="Điểm Đến", popup=location_dropoff.address, icon=folium.Icon(color='red', icon='flag')).add_to(m)
-
                         
-
                         st_folium(m, width=700, height=500, returned_objects=[])
 
-except Exception as e:
-
-                st.error(f"⚠️ Đã có lỗi xảy ra trong quá trình xử lý: {e}") 
+            except Exception as e:
+                st.error(f"⚠️ Đã có lỗi xảy ra trong quá trình xử lý: {e}")
